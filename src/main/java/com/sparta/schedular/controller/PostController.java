@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.swing.text.html.StyleSheet;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -23,6 +24,20 @@ public class PostController {
     @Autowired
     public PostController(PostService postService) {
         this.postService = postService;
+    }
+
+    // 일정 목록 조회
+    @GetMapping
+    public String getPosts(Model model) {
+        List<Post> posts = postService.getAllPosts(); // 모든 게시글을 가져오는 서비스 메서드 호출
+        model.addAttribute("posts", posts); // 모델에 게시글 리스트 추가
+        return "index"; // index.mustache로 리턴 (일정 목록을 표시할 뷰)
+    }
+    @GetMapping("/{id}")
+    public String getPostById(@PathVariable Long id, Model model) {
+        Post post = postService.findPostById(id);
+        model.addAttribute("post", post);
+        return "post-detail"; // 포스트 세부 정보를 표시할 뷰 이름을 반환
     }
 
     // '글 등록' 버튼을 눌렀을 때 보여줄 페이지를 반환하는 메서드

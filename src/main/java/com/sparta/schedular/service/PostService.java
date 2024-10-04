@@ -18,6 +18,7 @@ public class PostService {
         this.postRepository = postRepository;
     }
 
+
     // 게시글을 찾거나 기본값 반환
     public Post getPostOrElse(Long id, Post defaultPost) {
         Post post = postRepository.findById(id).orElse(null); // 게시글 조회
@@ -58,6 +59,10 @@ public class PostService {
     }
 
 
+    public Post findPostById(Long id) {
+        // 데이터베이스에서 포스트를 검색하는 로직
+        return postRepository.findById(id); // 포스트를 가져오는 실제 메서드로 교체
+    }
 
 }
 
